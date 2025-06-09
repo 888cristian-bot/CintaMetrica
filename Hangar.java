@@ -15,38 +15,38 @@ public class Hangar implements Cloneable, Comparable<Hangar> {
 
     // Alternativa copia profunda
     public Hangar copiaProfunda() throws CloneNotSupportedException {
-        Hangar copiaHangar = (Hangar)super.clone();
-        copiaHangar.primerUso = (java.util.Date)primerUso.clone();
+        Hangar copiaHangar = (Hangar) super.clone();
+        copiaHangar.primerUso = (java.util.Date) primerUso.clone();
         return copiaHangar;
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        Hangar copiaHangar = new Hangar(id, area);
-        copiaHangar.primerUso = new java.util.Date();
-        copiaHangar.primerUso.setTime(primerUso.getTime());
-        return copiaHangar;
-    }
-
-    @Override
-    public Object clone() {
-        Hangar copiaHangar = (Hangar)super.clone();
-        copiaHangar.primerUso = (java.util.Date)primerUso.clone();
+    public Hangar clone() {
         try {
+            Hangar copiaHangar = (Hangar) super.clone();
+            copiaHangar.primerUso = (java.util.Date) primerUso.clone();
             return copiaHangar;
-        } catch (CloneNotSupportedException ex) { return null; }
+        } catch (CloneNotSupportedException ex) {
+            return null;
+        }
     }
 
     @Override
     public int compareTo(Hangar objeto) {
-        if (area > objeto.area)
-            return 1;
-        else if (area < objeto.area)
-            return -1;
-        return 0;
+        return Double.compare(area, objeto.area);
     }
 
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public static void main(String[] args) {
         Hangar hangar1 = new Hangar(101, 23902.46);
+
+        // Copia superficial (comentada)
+        // Hangar copia = hangar1;
+
+        // Copia profunda activada
+        Hangar copia = hangar1.clone();
+
+        System.out.println("ID original: " + hangar1.obtenerID());
+        System.out.println("ID copia: " + copia.obtenerID());
+        System.out.println("Misma referencia de fecha: " + (hangar1.obtenerFecha() == copia.obtenerFecha()));
     }
 }
